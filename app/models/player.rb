@@ -18,6 +18,8 @@ class Player < ActiveRecord::Base
 
   has_one :grid
 
+  has_one :piece_preview
+
   before_create :setup_player_components
 
   private

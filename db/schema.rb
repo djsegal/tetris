@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150828212922) do
+ActiveRecord::Schema.define(version: 20150828231826) do
 
   create_table "blocks", force: :cascade do |t|
     t.integer  "permutation_id"
@@ -50,17 +50,28 @@ ActiveRecord::Schema.define(version: 20150828212922) do
 
   add_index "permutations", ["piece_id"], name: "index_permutations_on_piece_id"
 
+  create_table "piece_previews", force: :cascade do |t|
+    t.integer  "visible_count", default: 3
+    t.integer  "player_id"
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+  end
+
+  add_index "piece_previews", ["player_id"], name: "index_piece_previews_on_player_id"
+
   create_table "pieces", force: :cascade do |t|
     t.integer  "grid_id"
     t.integer  "x_pos"
     t.integer  "y_pos"
     t.string   "type"
     t.string   "color"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+    t.integer  "piece_preview_id"
   end
 
   add_index "pieces", ["grid_id"], name: "index_pieces_on_grid_id"
+  add_index "pieces", ["piece_preview_id"], name: "index_pieces_on_piece_preview_id"
 
   create_table "players", force: :cascade do |t|
     t.integer  "score"
