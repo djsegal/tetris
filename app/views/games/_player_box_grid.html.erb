@@ -1,0 +1,39 @@
+<%
+  grid = player.grid
+  row_index = grid.height + grid.top_buffer - 1
+  number_of_columns = grid.width
+%>
+
+<table class='cs-fill'>
+
+  <% grid.top_buffer.times do %>
+    <tr class='cs-hidden' data-row='<%= row_index %>'>
+      <% number_of_columns.times do |j| %>
+        <td data-col='<%= j %>'>
+        </td>
+      <% end %>
+    </tr>
+    <% row_index -= 1 %>
+  <% end %>
+
+  <% grid.height.times do %>
+    <tr data-row='<%= row_index %>'>
+      <% number_of_columns.times do |j| %>
+        <td data-col='<%= j %>'>
+        </td>
+      <% end %>
+    </tr>
+    <% row_index -= 1 %>
+  <% end %>
+
+  <% grid.bot_buffer.times do %>
+    <tr class='cs-hidden' data-row='<%= row_index %>'>
+      <% number_of_columns.times do |j| %>
+        <td data-col='<%= j %>'>
+        </td>
+      <% end %>
+    </tr>
+    <% row_index -= 1 %>
+  <% end %>
+
+</table>

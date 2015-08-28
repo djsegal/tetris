@@ -18,12 +18,12 @@ class Player < ActiveRecord::Base
 
   has_one :grid
 
-  after_create :setup_player_components
+  before_create :setup_player_components
 
   private
 
     def setup_player_components
-      grid = Grid.create!
+      build_grid
     end
 
 end
