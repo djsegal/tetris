@@ -5,9 +5,9 @@
     <td style='width:17.5%'>
     </td>
     <td class='cs-player-select'>
-        <%= link_to games_path, :method => :post do %>
-          <div class='js-player-select__button'></div>
-        <% end %>
+      <%= link_to games_path(@game, number_of_players: 1), :method => :post do %>
+        <div class='js-player-select__button'></div>
+      <% end %>
     </td>
     <td class='cs-player-select'>
     </td>
@@ -42,7 +42,6 @@
   }
 
   window.onload = resizeButton;
-  document.onresize = resizeButton;
   window.onresize = resizeButton;
 
 </script>
