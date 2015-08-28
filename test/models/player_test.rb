@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: users
+# Table name: players
 #
 #  id             :integer          not null, primary key
 #  score          :integer
@@ -10,6 +10,10 @@
 #  ordering_index :integer
 #
 
-class User < ActiveRecord::Base
-  belongs_to :game
+require 'test_helper'
+
+class PlayerTest < ActiveSupport::TestCase
+  # test "the truth" do
+  #   assert true
+  # end
 end

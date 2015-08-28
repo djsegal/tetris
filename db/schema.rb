@@ -30,14 +30,14 @@ ActiveRecord::Schema.define(version: 20150828204541) do
   end
 
   create_table "grids", force: :cascade do |t|
-    t.integer  "user_id"
+    t.integer  "player_id"
     t.integer  "height"
     t.integer  "width"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  add_index "grids", ["user_id"], name: "index_grids_on_user_id"
+  add_index "grids", ["player_id"], name: "index_grids_on_player_id"
 
   create_table "permutations", force: :cascade do |t|
     t.integer  "piece_id"
@@ -60,7 +60,7 @@ ActiveRecord::Schema.define(version: 20150828204541) do
 
   add_index "pieces", ["grid_id"], name: "index_pieces_on_grid_id"
 
-  create_table "users", force: :cascade do |t|
+  create_table "players", force: :cascade do |t|
     t.integer  "score"
     t.integer  "game_id"
     t.datetime "created_at",     null: false
@@ -68,6 +68,6 @@ ActiveRecord::Schema.define(version: 20150828204541) do
     t.integer  "ordering_index"
   end
 
-  add_index "users", ["game_id"], name: "index_users_on_game_id"
+  add_index "players", ["game_id"], name: "index_players_on_game_id"
 
 end

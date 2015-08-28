@@ -10,15 +10,15 @@
 
 class Game < ActiveRecord::Base
 
-  has_many :users
+  has_many :players
 
-  after_create :make_users
+  after_create :make_players
 
   private
 
-    def make_users
+    def make_players
       number_of_players.times do |i|
-        users.create!
+        players.create! ordering_index: i
       end
       binding.pry
     end

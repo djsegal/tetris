@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: users
+# Table name: players
 #
 #  id             :integer          not null, primary key
 #  score          :integer
@@ -10,12 +10,6 @@
 #  ordering_index :integer
 #
 
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
-one:
-  score: 1
-  game_id: 
-
-two:
-  score: 1
-  game_id: 
+class Player < ActiveRecord::Base
+  belongs_to :game
+end

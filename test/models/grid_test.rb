@@ -3,7 +3,7 @@
 # Table name: grids
 #
 #  id         :integer          not null, primary key
-#  user_id    :integer
+#  player_id  :integer
 #  height     :integer
 #  width      :integer
 #  created_at :datetime         not null
