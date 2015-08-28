@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  grid_id: 
+  x_pos: 1
+  y_pos: 1
+  type: 
+  color: MyString
+
+two:
+  grid_id: 
+  x_pos: 1
+  y_pos: 1
+  type: 
+  color: MyString
