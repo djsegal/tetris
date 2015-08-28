@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  permutation_id: 
+  x_pos: 1
+  y_pos: 1
+
+two:
+  permutation_id: 
+  x_pos: 1
+  y_pos: 1
