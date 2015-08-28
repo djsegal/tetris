@@ -9,4 +9,18 @@
 #
 
 class Game < ActiveRecord::Base
+
+  has_many :users
+
+  after_create :make_users
+
+  private
+
+    def make_users
+      number_of_players.times do |i|
+        users.create!
+      end
+      binding.pry
+    end
+
 end

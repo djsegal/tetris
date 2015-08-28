@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150828200612) do
+ActiveRecord::Schema.define(version: 20150828204541) do
 
   create_table "blocks", force: :cascade do |t|
     t.integer  "permutation_id"
@@ -63,8 +63,9 @@ ActiveRecord::Schema.define(version: 20150828200612) do
   create_table "users", force: :cascade do |t|
     t.integer  "score"
     t.integer  "game_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+    t.integer  "ordering_index"
   end
 
   add_index "users", ["game_id"], name: "index_users_on_game_id"
