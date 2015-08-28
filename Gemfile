@@ -1,5 +1,14 @@
 source 'https://rubygems.org'
 
+# ------------------
+#  Added for Tetris
+# ------------------
+
+gem 'gosu', '~> 0.10.1'
+
+# ------------------
+#  Added for Tetris
+# ------------------
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.2'
