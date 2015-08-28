@@ -1,4 +1,14 @@
-<p id="notice"><%= notice %></p>
+<%
+  box_width = 100.to_f / @game.number_of_players
+  box_style = 'width: calc(' + box_width.to_s + '% - 2.5px)'
+%>
 
-<%= link_to 'Edit', edit_game_path(@game) %> |
-<%= link_to 'Back', games_path %>
+<% @game.players.each do |player| %>
+
+  <div class='cs-player-box' style='<%= box_style %>'>
+
+    <%= render partial: 'player_box', locals: { player: player } %>
+
+  </div>
+
+<% end %>

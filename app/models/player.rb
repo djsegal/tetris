@@ -11,5 +11,19 @@
 #
 
 class Player < ActiveRecord::Base
+
+  default_scope { order('ordering_index ASC') }
+
   belongs_to :game
+
+  has_one :grid
+
+  after_create :setup_player_components
+
+  private
+
+    def setup_player_components
+      grid = Grid.create!
+    end
+
 end

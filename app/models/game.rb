@@ -20,7 +20,6 @@ class Game < ActiveRecord::Base
       number_of_players.times do |i|
         players.create! ordering_index: i
       end
-      binding.pry
     end
 
 end

@@ -10,6 +10,9 @@
       <% end %>
     </td>
     <td class='cs-player-select'>
+      <%= link_to games_path(@game, number_of_players: 2), :method => :post do %>
+        <div class='js-player-select__button'></div>
+      <% end %>
     </td>
     <td style='width:17.5%'>
     </td>
