@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150828231826) do
+ActiveRecord::Schema.define(version: 20150828234846) do
 
   create_table "blocks", force: :cascade do |t|
     t.integer  "permutation_id"
@@ -22,6 +22,14 @@ ActiveRecord::Schema.define(version: 20150828231826) do
   end
 
   add_index "blocks", ["permutation_id"], name: "index_blocks_on_permutation_id"
+
+  create_table "current_pieces", force: :cascade do |t|
+    t.integer  "player_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "current_pieces", ["player_id"], name: "index_current_pieces_on_player_id"
 
   create_table "games", force: :cascade do |t|
     t.datetime "created_at",        null: false
@@ -68,8 +76,10 @@ ActiveRecord::Schema.define(version: 20150828231826) do
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
     t.integer  "piece_preview_id"
+    t.integer  "current_piece_id"
   end
 
+  add_index "pieces", ["current_piece_id"], name: "index_pieces_on_current_piece_id"
   add_index "pieces", ["grid_id"], name: "index_pieces_on_grid_id"
   add_index "pieces", ["piece_preview_id"], name: "index_pieces_on_piece_preview_id"
 
