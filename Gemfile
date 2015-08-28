@@ -5,6 +5,22 @@ source 'https://rubygems.org'
 # ------------------
 
 gem 'gosu', '~> 0.10.1'
+gem 'bootstrap-sass'
+gem 'twitter-bootstrap-rails'
+gem 'jquery-ui-rails'
+
+group :development, :test do
+  gem 'annotate', '~> 2.6.6'
+  gem 'jazz_hands', github: 'nixme/jazz_hands', branch: 'bring-your-own-debugger'
+  gem 'pry-byebug'
+  gem 'better_errors'
+  gem 'binding_of_caller'
+end
+
+group :production do
+  gem 'pg',             '0.17.1'
+  gem 'rails_12factor', '0.0.2'
+end
 
 # ------------------
 #  Added for Tetris
