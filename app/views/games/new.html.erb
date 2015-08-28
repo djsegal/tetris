@@ -1,5 +1,48 @@
-<h1>New Game</h1>
+<table class='cs-home-page'>
+  <tr style='height:75%'>
+  </tr>
+  <tr style='height:10%'>
+    <td style='width:17.5%'>
+    </td>
+    <td class='cs-player-select'>
+        <%= link_to games_path, :method => :post do %>
+          <div class='js-player-select__button'></div>
+        <% end %>
+    </td>
+    <td class='cs-player-select'>
+    </td>
+    <td style='width:17.5%'>
+    </td>
+  </tr>
+  <tr style='height:15%'>
+  </tr>
+</table>
 
-<%= render 'form' %>
+<script>
 
-<%= link_to 'Back', games_path %>
+  function resizeButton(){
+
+    var buttonBox = document.getElementsByClassName('cs-player-select')[0];
+    var buttonsArray = document.getElementsByClassName('js-player-select__button');
+    var arrayLength = buttonsArray.length;
+
+    for (var i = 0; i < arrayLength; i++) {
+      buttonsArray[i].style.width = '';
+      buttonsArray[i].style.height = '';
+    }
+
+    var buttonWidth = buttonBox.clientWidth + 'px';
+    var buttonHeight = buttonBox.clientHeight + 'px';
+
+    for (var i = 0; i < arrayLength; i++) {
+      buttonsArray[i].style.width = buttonWidth;
+      buttonsArray[i].style.height = buttonHeight;
+    }
+
+  }
+
+  window.onload = resizeButton;
+  document.onresize = resizeButton;
+  window.onresize = resizeButton;
+
+</script>
