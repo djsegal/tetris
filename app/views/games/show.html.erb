@@ -3,12 +3,22 @@
   box_style = 'width: calc(' + box_width.to_s + '% - 2.5px)'
 %>
 
-<% @game.players.each do |player| %>
+<div class='cs-fill' id='js-game-box'>
 
-  <div class='cs-player-box' style='<%= box_style %>'>
+  <% @game.players.each do |player| %>
 
-    <%= render partial: 'player_box', locals: { player: player } %>
+    <div class='cs-player-box' style='<%= box_style %>'>
 
-  </div>
+      <%= render partial: 'player_box', locals: { player: player } %>
 
-<% end %>
+    </div>
+
+  <% end %>
+
+</div>
+
+<script>
+  $(document).ready(function() {
+    $('#js-game-box').trigger('gameReady', '<%= @game.id %>');
+  });
+</script>

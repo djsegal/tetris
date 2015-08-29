@@ -18,6 +18,8 @@
 
 class Piece < ActiveRecord::Base
 
+  default_scope { order('ordering_index ASC') }
+
   belongs_to :piece_preview
 
   belongs_to :current_piece
@@ -25,6 +27,18 @@ class Piece < ActiveRecord::Base
   belongs_to :grid
 
   has_many :permutations
+
+  TYPES_OF_FIRST_PIECES = [ 'i', 't', 'j', 'l' ]
+
+  before_create :make_initial_permutation
+
+  # --------------------
+  #  instance variables
+  # --------------------
+
+  # -----------------
+  #  class variables
+  # -----------------
 
   def self.possible_pieces
     large_pieces + small_pieces + medium_pieces
@@ -47,5 +61,11 @@ class Piece < ActiveRecord::Base
       { piece_type: 'l', color: 'orange' },
     ]
   end
+
+  private
+
+    def make_initial_permutation
+      permutations.build ordering_index: 0
+    end
 
 end

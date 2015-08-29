@@ -20,12 +20,16 @@ class Player < ActiveRecord::Base
 
   has_one :piece_preview
 
+  has_one :current_piece
+
   before_create :setup_player_components
 
   private
 
     def setup_player_components
       build_grid
+      build_piece_preview
+      build_current_piece
     end
 
 end

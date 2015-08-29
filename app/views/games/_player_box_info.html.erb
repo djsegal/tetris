@@ -1,0 +1,11 @@
+<%
+  piece_count = piece_preview.visible_count
+  div_height = 100.to_f / ( piece_count )
+  div_style = 'height: ' + div_height.to_s + '%'
+%>
+
+<% piece_count.times do |piece_number| %>
+  <div class='cs-player-box-item cs-fill' style='<%= div_style %>'>
+    <%= render partial: 'player_box_info_preview', locals: {piece_number: piece_number } %>
+  </div>
+<% end %>

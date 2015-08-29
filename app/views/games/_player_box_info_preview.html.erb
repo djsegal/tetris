@@ -1,0 +1,18 @@
+<% preview_box_width = 4 %>
+
+<table data-preview='<%= piece_number + 1 %>' class='cs-fill cs-player-box-grid'>
+
+  <th colspan='<%= preview_box_width %>'>
+    <%= piece_number + 1 %>
+  </th>
+
+  <% preview_box_width.times do |i| %>
+    <tr data-row='<%= i %>'>
+      <% preview_box_width.times do |j| %>
+        <td data-col='<%= j %>'>
+        </td>
+      <% end %>
+    </tr>
+  <% end %>
+
+</table>
