@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150829030616) do
+ActiveRecord::Schema.define(version: 20150829032231) do
 
   create_table "blocks", force: :cascade do |t|
     t.integer  "permutation_id"
@@ -78,6 +78,7 @@ ActiveRecord::Schema.define(version: 20150829030616) do
     t.datetime "updated_at",       null: false
     t.integer  "piece_preview_id"
     t.integer  "current_piece_id"
+    t.integer  "ordering_index"
   end
 
   add_index "pieces", ["current_piece_id"], name: "index_pieces_on_current_piece_id"

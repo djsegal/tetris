@@ -12,6 +12,7 @@
 #  updated_at       :datetime         not null
 #  piece_preview_id :integer
 #  current_piece_id :integer
+#  ordering_index   :integer
 #
 
 require 'test_helper'
