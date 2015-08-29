@@ -7,7 +7,7 @@
 
   <% @game.players.each do |player| %>
 
-    <div class='cs-player-box' style='<%= box_style %>'>
+    <div class='cs-player-box js-player-box' data-player='<%= player.ordering_index %>' style='<%= box_style %>'>
 
       <%= render partial: 'player_box', locals: { player: player } %>
 

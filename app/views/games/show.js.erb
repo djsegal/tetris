@@ -1,0 +1,20 @@
+<% @game.players.each do |player| %>
+
+  var playerBox = $('.js-player-box[data-player="<%= player.ordering_index %>"]')[0];
+
+  var playerPreviews = playerBox.getElementsByClassName('js-player-box-preview');
+
+  var arrayLength = playerPreviews.length;
+
+  <% player.piece_preview.pieces[0..player.piece_preview.visible_count]
+    .each_with_index do |piece, index| %>
+
+    <% piece.permutations.first.blocks.each do |block| %>
+
+      playerPreviews[<%= index %>].rows[<%= 4 - block.y_pos %>].cells[<%= block.x_pos %>].style.backgroundColor = '<%= piece.color %>'
+
+    <% end %>
+
+  <% end %>
+
+<% end %>

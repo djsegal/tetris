@@ -60,7 +60,7 @@ class Permutation < ActiveRecord::Base
   def init_s_piece
     2.times do |i|
       2.times do |j|
-        blocks.build x_pos: i+1, y_pos: (i+j+0)%2
+        blocks.build x_pos: 0+(i+j), y_pos: 1+j
       end
     end
   end
@@ -68,7 +68,7 @@ class Permutation < ActiveRecord::Base
   def init_z_piece
     2.times do |i|
       2.times do |j|
-        blocks.build x_pos: i+1, y_pos: (i+j+1)%2
+        blocks.build x_pos: 2-(i+j), y_pos: 1+j
       end
     end
   end
@@ -84,7 +84,7 @@ class Permutation < ActiveRecord::Base
       when 's' ; init_s_piece
       when 'z' ; init_z_piece
       when 'j' ; init_j_piece
-      when 'l' ; init_i_piece
+      when 'l' ; init_l_piece
       else
         _raise 'Bad piece type for permutation.'
       end
