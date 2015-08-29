@@ -13,6 +13,7 @@
 #  piece_preview_id :integer
 #  current_piece_id :integer
 #  ordering_index   :integer
+#  width            :integer          default(3)
 #
 
 class Piece < ActiveRecord::Base
@@ -22,5 +23,29 @@ class Piece < ActiveRecord::Base
   belongs_to :current_piece
 
   belongs_to :grid
+
+  has_many :permutations
+
+  def self.possible_pieces
+    large_pieces + small_pieces + medium_pieces
+  end
+
+  def self.large_pieces
+    [ { piece_type: 'i', color:  'cyan' , width: 4 } ]
+  end
+
+  def self.small_pieces
+    [ { piece_type: 'o', color: 'yellow', width: 2 } ]
+  end
+
+  def self.medium_pieces
+    [
+      { piece_type: 't', color: 'purple' },
+      { piece_type: 's', color: 'green'  },
+      { piece_type: 'z', color: 'red'    },
+      { piece_type: 'j', color: 'blue'   },
+      { piece_type: 'l', color: 'orange' },
+    ]
+  end
 
 end

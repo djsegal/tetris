@@ -10,5 +10,9 @@
 #
 
 class Permutation < ActiveRecord::Base
+
   belongs_to :piece
+
+  has_many :blocks
+
 end

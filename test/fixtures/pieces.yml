@@ -13,6 +13,7 @@
 #  piece_preview_id :integer
 #  current_piece_id :integer
 #  ordering_index   :integer
+#  width            :integer          default(3)
 #
 
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html

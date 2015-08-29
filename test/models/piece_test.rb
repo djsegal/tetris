@@ -13,6 +13,7 @@
 #  piece_preview_id :integer
 #  current_piece_id :integer
 #  ordering_index   :integer
+#  width            :integer          default(3)
 #
 
 require 'test_helper'
