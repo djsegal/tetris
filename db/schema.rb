@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150829024527) do
+ActiveRecord::Schema.define(version: 20150829030616) do
 
   create_table "blocks", force: :cascade do |t|
     t.integer  "permutation_id"
@@ -72,7 +72,7 @@ ActiveRecord::Schema.define(version: 20150829024527) do
     t.integer  "grid_id"
     t.integer  "x_pos"
     t.integer  "y_pos"
-    t.string   "type"
+    t.string   "piece_type"
     t.string   "color"
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false

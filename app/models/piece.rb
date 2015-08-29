@@ -6,7 +6,7 @@
 #  grid_id          :integer
 #  x_pos            :integer
 #  y_pos            :integer
-#  type             :string
+#  piece_type       :string
 #  color            :string
 #  created_at       :datetime         not null
 #  updated_at       :datetime         not null
