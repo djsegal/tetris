@@ -4,11 +4,6 @@ source 'https://rubygems.org'
 #  Added for Tetris
 # ------------------
 
-gem 'gosu', '~> 0.10.1'
-gem 'bootstrap-sass'
-gem 'twitter-bootstrap-rails'
-gem 'jquery-ui-rails'
-
 group :development, :test do
   gem 'annotate', '~> 2.6.6'
   gem 'jazz_hands', github: 'nixme/jazz_hands', branch: 'bring-your-own-debugger'
