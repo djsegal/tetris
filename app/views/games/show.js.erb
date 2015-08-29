@@ -1,20 +1,58 @@
-<% @game.players.each do |player| %>
+var playerBox, playerPreviews, currentBlock;
 
-  var playerBox = $('.js-player-box[data-player="<%= player.ordering_index %>"]')[0];
+playerGrid = []
+currentPiece = [];
+currentColor = [];
+boundaries = [];
 
-  var playerPreviews = playerBox.getElementsByClassName('js-player-box-preview');
+<% @game.players.each_with_index do |player, i| %>
 
-  var arrayLength = playerPreviews.length;
+  playerBox = $('.js-player-box[data-player="<%= i %>"]')[0];
 
-  <% player.piece_preview.pieces[0..player.piece_preview.visible_count]
-    .each_with_index do |piece, index| %>
+  // Add first piece
+
+  playerGrid[<%= i %>] = playerBox.getElementsByClassName('js-player-box-grid')[0];
+
+  <%
+    piece = player.current_piece.piece
+    grid = player.grid
+    upper_height = grid.height + grid.top_buffer
+    side_buffer = grid.side_buffer
+  %>
+
+  currentPiece[<%= i %>] = [];
+  currentColor[<%= i %>] = '<%= piece.color %>';
+
+  boundaries[<%= i %>] = [0, <%= side_buffer %>, <%= upper_height - 1 %>, <%= side_buffer + grid.width - 1 %>];
+
+  <% piece.permutations.first.blocks.each do |block| %>
+
+    currentBlock = [
+      <%= (upper_height-1)-(piece.y_pos+block.y_pos) %>,
+      <%= side_buffer + piece.x_pos + block.x_pos %>
+    ];
+
+    playerGrid[<%= i %>].rows[currentBlock[0]].cells[currentBlock[1]].style.backgroundColor = '<%= piece.color %>';
+
+    currentPiece[<%= i %>].push(currentBlock);
+
+  <% end %>
+
+  // Add preview pieces
+
+  playerPreviews = playerBox.getElementsByClassName('js-player-box-preview');
+
+  <% player.piece_preview.pieces[0..player.piece_preview.visible_count-1]
+    .each_with_index do |piece, j| %>
 
     <% piece.permutations.first.blocks.each do |block| %>
 
-      playerPreviews[<%= index %>].rows[<%= 4 - block.y_pos %>].cells[<%= block.x_pos %>].style.backgroundColor = '<%= piece.color %>'
+      playerPreviews[<%= j %>].rows[<%= 4 - block.y_pos %>].cells[<%= block.x_pos %>].style.backgroundColor = '<%= piece.color %>';
 
     <% end %>
 
   <% end %>
 
 <% end %>
+
+$('#js-game-box').trigger('gameStart', '<%= @game.id %>');
