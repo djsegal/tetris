@@ -31,3 +31,7 @@ html, body {
   height: 0;
   width: 0;
 }
+
+.cs-greyed-out {
+  background-color: lightGrey;
+}

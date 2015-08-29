@@ -3,7 +3,7 @@
 %>
 
 <% grid.side_buffer.times do %>
-  <td class='cs-hidden' data-col='<%= col_index %>'>
+  <td class='<%= buffer_class %>' data-col='<%= col_index %>'>
   </td>
   <% col_index += 1 %>
 <% end %>
@@ -15,7 +15,7 @@
 <% end %>
 
 <% grid.side_buffer.times do %>
-  <td class='cs-hidden' data-col='<%= col_index %>'>
+  <td class='<%= buffer_class %>' data-col='<%= col_index %>'>
   </td>
   <% col_index += 1 %>
 <% end %>
