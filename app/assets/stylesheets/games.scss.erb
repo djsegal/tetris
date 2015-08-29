@@ -41,7 +41,11 @@
     padding: 0;
   }
 
-  tr:not(.cs-hidden) td {
+  td.cs-hidden {
+    padding: 0;
+  }
+
+  tr:not(.cs-hidden) td:not(.cs-hidden) {
     border: 1px solid black;
   }
 

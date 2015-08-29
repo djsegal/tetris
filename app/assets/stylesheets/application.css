@@ -29,4 +29,5 @@ html, body {
 
 .cs-hidden {
   height: 0;
+  width: 0;
 }

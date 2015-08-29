@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150828234846) do
+ActiveRecord::Schema.define(version: 20150829024527) do
 
   create_table "blocks", force: :cascade do |t|
     t.integer  "permutation_id"
@@ -39,12 +39,13 @@ ActiveRecord::Schema.define(version: 20150828234846) do
 
   create_table "grids", force: :cascade do |t|
     t.integer  "player_id"
-    t.integer  "height",     default: 20
-    t.integer  "width",      default: 10
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
-    t.integer  "top_buffer", default: 2
-    t.integer  "bot_buffer", default: 3
+    t.integer  "height",      default: 20
+    t.integer  "width",       default: 10
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+    t.integer  "top_buffer",  default: 2
+    t.integer  "bot_buffer",  default: 3
+    t.integer  "side_buffer", default: 2
   end
 
   add_index "grids", ["player_id"], name: "index_grids_on_player_id"

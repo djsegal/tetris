@@ -1,0 +1,21 @@
+<%
+  col_index = -grid.side_buffer
+%>
+
+<% grid.side_buffer.times do %>
+  <td class='cs-hidden' data-col='<%= col_index %>'>
+  </td>
+  <% col_index += 1 %>
+<% end %>
+
+<% grid.width.times do |j| %>
+  <td data-col='<%= col_index %>'>
+  </td>
+  <% col_index += 1 %>
+<% end %>
+
+<% grid.side_buffer.times do %>
+  <td class='cs-hidden' data-col='<%= col_index %>'>
+  </td>
+  <% col_index += 1 %>
+<% end %>
