@@ -1,6 +1,8 @@
 var playerBox, playerPreviews, currentBlock;
 
 playerGrid = []
+piecePermutations = [];
+permutationIndex = []
 currentPiece = [];
 currentColor = [];
 boundaries = [];
@@ -11,7 +13,7 @@ gameId = '<%= @game.id %>'
 
   playerBox = $('.js-player-box[data-player="<%= i %>"]')[0];
 
-  // Add first piece
+  // Update current piece
 
   playerGrid[<%= i %>] = playerBox.getElementsByClassName('js-player-box-grid')[0];
 
@@ -22,23 +24,37 @@ gameId = '<%= @game.id %>'
     side_buffer = grid.side_buffer
   %>
 
-  currentPiece[<%= i %>] = [];
   currentColor[<%= i %>] = '<%= piece.color %>';
-
   boundaries[<%= i %>] = [0, <%= side_buffer %>, <%= upper_height - 1 %>, <%= side_buffer + grid.width - 1 %>];
 
-  <% piece.permutations.first.blocks.each do |block| %>
+  piecePermutations[<%= i %>] = [];
 
-    currentBlock = [
-      <%= (upper_height-1)-(piece.y_pos+block.y_pos) %>,
-      <%= side_buffer + piece.x_pos + block.x_pos %>
-    ];
+  <% piece.permutations.each_with_index do |permutation, j| %>
 
-    playerGrid[<%= i %>].rows[currentBlock[0]].cells[currentBlock[1]].style.backgroundColor = '<%= piece.color %>';
+    piecePermutations[<%= i %>][<%= j %>] = [];
 
-    currentPiece[<%= i %>].push(currentBlock);
+    <% permutation.blocks.each do |block| %>
+
+      currentBlock = [
+        <%= (upper_height-1)-(piece.y_pos+block.y_pos) %>,
+        <%= side_buffer + piece.x_pos + block.x_pos %>
+      ];
+
+      piecePermutations[<%= i %>][<%= j %>].push(currentBlock);
+
+    <% end %>
 
   <% end %>
+
+  permutationIndex[<%= i %>] = 0;
+
+  currentPiece[<%= i %>] = piecePermutations[<%= i %>][permutationIndex[<%= i %>]];
+
+  arrayLength = currentPiece[<%= i %>].length;
+  for (var jj = 0; jj < arrayLength; jj++) {
+    currentBlock = currentPiece[<%= i %>][jj];
+    playerGrid[<%= i %>].rows[currentBlock[0]].cells[currentBlock[1]].style.backgroundColor = '<%= piece.color %>';
+  }
 
   // Add preview pieces
 
@@ -65,4 +81,4 @@ gameId = '<%= @game.id %>'
 
 <% end %>
 
-$('#js-game-box').trigger('gameStart', '<%= @game.id %>');
+$('#js-game-box').trigger('gameUpdated', '<%= @game.id %>');
