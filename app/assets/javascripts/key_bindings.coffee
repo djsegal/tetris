@@ -92,11 +92,66 @@ $ ->
     clearInterval(gameClock[playerIndex])
     gameClock[playerIndex] = null
 
+  clearFullRows = (playerIndex) ->
+    checkedRows = []
+    fullRows = []
+    runs = []
+
+    for block in currentPiece[playerIndex]
+      unless block[0] in checkedRows
+        checkedRows.push block[0]
+
+    for row in checkedRows.sort().reverse()
+      isFullRow = true
+      for col in [boundaries[playerIndex][1]..boundaries[playerIndex][3]]
+        if playerGrid[playerIndex].rows[row].cells[col].style.backgroundColor == ''
+          isFullRow = false
+          break
+      if isFullRow
+        fullRows.push row
+
+    fullRowCount = fullRows.length
+    return if fullRowCount < 1
+
+    for row in fullRows
+      for col in [boundaries[playerIndex][1]..boundaries[playerIndex][3]]
+        playerGrid[playerIndex].rows[row].cells[col].style.backgroundColor = ''
+
+    currentRun = 1
+    runsCount = 1
+
+    runs[runsCount-1] = [fullRows[0]]
+    if fullRowCount > 1
+      for rowIndex in [1..fullRowCount-1]
+        if runs[runsCount-1][0] == fullRows[rowIndex] + currentRun
+          currentRun += 1
+          continue
+        else
+          currentRun = 1
+          runs[runsCount-1].push fullRows[rowIndex-1]
+          runsCount += 1
+          runs[runsCount-1] = [fullRows[rowIndex]]
+    runs[runsCount-1].push fullRows[fullRows.length-1]
+
+    runs[runsCount] = [boundaries[playerIndex][0]+fullRowCount]
+    lineSubtract = 0
+    for runIndex in [0..runsCount-1]
+      oldLineSubtract = lineSubtract
+      lineSubtract += 1 + runs[runIndex][0] - runs[runIndex][1]
+      for row in [runs[runIndex][0]+oldLineSubtract..runs[runIndex+1][0]+lineSubtract]
+        for col in [boundaries[playerIndex][1]..boundaries[playerIndex][3]]
+          upperColor = playerGrid[playerIndex].rows[row-lineSubtract].cells[col].style.backgroundColor
+          playerGrid[playerIndex].rows[row].cells[col].style.backgroundColor = upperColor
+          playerGrid[playerIndex].rows[row-lineSubtract].cells[col].style.backgroundColor = ''
+
   triggerNextPiece = (playerIndex) ->
     return if gettingPiece[playerIndex]
     gettingPiece[playerIndex] = true
+
     stopMoveTimer(playerIndex)
     stopGameClock(playerIndex)
+    clearFullRows(playerIndex)
+
     url = '/games/' + gameId + '/next_piece.js?player_index=' + playerIndex
     $.ajax
       type: 'GET'
