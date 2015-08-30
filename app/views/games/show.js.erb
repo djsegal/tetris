@@ -1,15 +1,35 @@
 var playerBox, playerPreviews, currentBlock;
 
-playerGrid = []
-piecePermutations = [];
-permutationIndex = []
-currentPiece = [];
-currentColor = [];
-boundaries = [];
+<% unless @player.present? %>
 
-gameId = '<%= @game.id %>'
+  gameId = '<%= @game.id %>'
 
-<% @game.players.each_with_index do |player, i| %>
+  playerGrid = []
+  piecePermutations = [];
+  permutationIndex = []
+  currentPiece = [];
+  currentColor = [];
+  boundaries = [];
+
+<% end %>
+
+<%
+  if @player.present?
+    player_id = @player.ordering_index
+    if player_id == 0
+      players = [@player, nil]
+    else
+      players = [nil, @player]
+    end
+  else
+    players = @game.players
+    player_id = ''
+  end
+%>
+
+<% players.each_with_index do |player, i| %>
+
+  <% next if player.nil? %>
 
   playerBox = $('.js-player-box[data-player="<%= i %>"]')[0];
 
@@ -81,4 +101,4 @@ gameId = '<%= @game.id %>'
 
 <% end %>
 
-$('#js-game-box').trigger('gameUpdated', '<%= @game.id %>');
+$('#js-game-box').trigger('gameUpdated', ['<%= @game.id %>', '<%= player_id %>']);

@@ -57,8 +57,8 @@ class GamesController < ApplicationController
 
   def next_piece
     set_game
-    player = @game.players.find_by(ordering_index: params[:player_index])
-    player.current_piece.get_next_piece
+    @player = @game.players.find_by(ordering_index: params[:player_index])
+    @player.current_piece.get_next_piece
     render :show
   end
 

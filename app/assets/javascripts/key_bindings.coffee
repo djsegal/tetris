@@ -74,42 +74,47 @@ $ ->
     return true if block[1] > boundaries[3]
     return false
 
-  restartGameClock = (playerIndex) ->
-    clearInterval(gameClock[playerIndex])
+  startGameClock = (playerIndex) ->
     _this = this
     gameClock[playerIndex] = setInterval(((playerIndex)->
       didMove = move(playerIndex,'d')
       return if didMove or nextMoveTimer[playerIndex]?
       nextMoveTimer[playerIndex] = setInterval(((playerIndex)->
         triggerNextPiece(playerIndex)
-      ), 1000, playerIndex)
-    ), 1000, playerIndex)
+      ), 200, playerIndex)
+    ), 200, playerIndex)
 
   stopMoveTimer = (playerIndex) ->
     clearInterval(nextMoveTimer[playerIndex]);
     nextMoveTimer[playerIndex] = null
 
+  stopGameClock = (playerIndex) ->
+    clearInterval(gameClock[playerIndex])
+    gameClock[playerIndex] = null
+
   triggerNextPiece = (playerIndex) ->
     return if gettingPiece[playerIndex]
     gettingPiece[playerIndex] = true
     stopMoveTimer(playerIndex)
+    stopGameClock(playerIndex)
     url = '/games/' + gameId + '/next_piece.js?player_index=' + playerIndex
     $.ajax
       type: 'GET'
       url: url
       success: () ->
-        setTimeout (->
-          gettingPiece[playerIndex] = false
-        ), 1000, playerIndex
+        gettingPiece[playerIndex] = false
 
-  $('#js-game-box').on 'gameUpdated', (src, gameId) ->
+  $('#js-game-box').on 'gameUpdated', (src, gameId, playerId) ->
+
+    if playerId == ''
+      playerCount = playerGrid.length
+      for playerIndex in [0..playerCount-1]
+        startGameClock(playerIndex)
+    else
+      startGameClock(playerId)
 
     return if gameStarted
     gameStarted = true
-
-    playerCount = playerGrid.length
-    for playerIndex in [0..playerCount-1]
-      restartGameClock(playerIndex)
 
     $(document).keydown (e) ->
       e.preventDefault()
@@ -128,8 +133,8 @@ $ ->
           while morePieces
             morePieces = move(0,'d')
           stopMoveTimer(0)
-          triggerNextPiece()
-          gettingPiece[playerIndex] = true
+          triggerNextPiece(0)
+          gettingPiece[0] = true
           return
         when 81
           # rotate counter-clockwise
