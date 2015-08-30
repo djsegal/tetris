@@ -18,7 +18,7 @@ class CurrentPiece < ActiveRecord::Base
 
   has_one :grid, through: :player
 
-  after_create :make_initial_current_piece
+  after_create :get_next_piece
 
   def position_piece
     x_pos  = (  grid.width / 2      )
@@ -30,14 +30,16 @@ class CurrentPiece < ActiveRecord::Base
     piece.update_attributes x_pos: x_pos, y_pos: y_pos
   end
 
-  private
+  def get_next_piece
+    next_piece = piece_preview.pieces.first
+    next_piece.piece_preview = nil
+    next_piece.save!
+    self.piece = next_piece
+    position_piece
 
-    def make_initial_current_piece
-      next_piece = piece_preview.pieces.first
-      next_piece.piece_preview = nil
-      next_piece.current_piece = self
-      next_piece.save!
-      position_piece
+    if piece_preview.pieces.count < piece_preview.visible_count
+      piece_preview.make_batch_of_pieces
     end
+  end
 
 end

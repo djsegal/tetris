@@ -5,6 +5,8 @@ Rails.application.routes.draw do
 
   root 'games#new'
 
-  resources :games
+  resources :games do
+    get 'next_piece', on: :member
+  end
 
 end

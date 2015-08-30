@@ -5,6 +5,8 @@ currentPiece = [];
 currentColor = [];
 boundaries = [];
 
+gameId = '<%= @game.id %>'
+
 <% @game.players.each_with_index do |player, i| %>
 
   playerBox = $('.js-player-box[data-player="<%= i %>"]')[0];
@@ -45,9 +47,17 @@ boundaries = [];
   <% player.piece_preview.pieces[0..player.piece_preview.visible_count-1]
     .each_with_index do |piece, j| %>
 
+    curPreviewBox = playerPreviews[<%= j %>];
+
+    previewBlocks = curPreviewBox.getElementsByTagName('td');
+    arrayLength = previewBlocks.length;
+    for (var ii = 0; ii < arrayLength; ii++) {
+      previewBlocks[ii].style.backgroundColor = '';
+    }
+
     <% piece.permutations.first.blocks.each do |block| %>
 
-      playerPreviews[<%= j %>].rows[<%= 4 - block.y_pos %>].cells[<%= block.x_pos %>].style.backgroundColor = '<%= piece.color %>';
+      curPreviewBox.rows[<%= 4 - block.y_pos %>].cells[<%= block.x_pos %>].style.backgroundColor = '<%= piece.color %>';
 
     <% end %>
 
