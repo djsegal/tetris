@@ -7,16 +7,16 @@
   div_style = 'height: ' + div_height.to_s + '%'
 %>
 
-<div class='cs-player-box-item cs-fill' style='<%= div_style %>'>
-  <%= render partial: 'player_box_info_hold' %>
-</div>
-
-<div class='cs-player-box-item cs-fill' style='<%= div_style %>'>
-  <%= render partial: 'player_box_info_scores' %>
-</div>
-
 <% preview_piece_count.times do |piece_number| %>
   <div class='cs-player-box-item cs-fill' style='<%= div_style %>'>
     <%= render partial: 'player_box_info_preview', locals: {piece_number: piece_number } %>
   </div>
 <% end %>
+
+<div class='cs-player-box-item cs-fill' style='<%= div_style %>'>
+  <%= render partial: 'player_box_info_scores' %>
+</div>
+
+<div class='cs-player-box-item cs-fill' style='<%= div_style %>'>
+  <%= render partial: 'player_box_info_hold' %>
+</div>

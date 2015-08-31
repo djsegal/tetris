@@ -6,6 +6,8 @@ $ ->
   nextMoveTimer = []
   gettingPiece = []
   ableToHold = []
+  ghostPiece = []
+  lineCount = []
 
   move = (playerIndex, direction) ->
     i = j = 0
@@ -15,14 +17,9 @@ $ ->
       when 'l' then j = +1
       when 'r' then j = -1
 
-    removeCurrentPiece(playerIndex)
+    removePiece(currentPiece, playerIndex)
 
-    didMove = true
-    for block in currentPiece[playerIndex]
-      tmpBlock = [ block[0] - i, block[1] - j ]
-      unless isValidMove(playerGrid[playerIndex], tmpBlock, boundaries[playerIndex])
-        didMove = false
-        break
+    didMove = isValidMove(playerIndex, i, j, currentPiece[playerIndex])
 
     if didMove
       for permutationNumber in [0..3]
@@ -30,8 +27,7 @@ $ ->
           piecePermutations[playerIndex][permutationNumber][blockNumber][0] -= i
           piecePermutations[playerIndex][permutationNumber][blockNumber][1] -= j
 
-    for block in currentPiece[playerIndex]
-      playerGrid[playerIndex].rows[block[0]].cells[block[1]].style.backgroundColor = currentColor[playerIndex]
+    insertPiece(currentPiece, playerIndex)
 
     return didMove
 
@@ -42,41 +38,72 @@ $ ->
     next_index = 0 if next_index > 3
     next_index = 3 if next_index < 0
 
-    removeCurrentPiece(playerIndex)
+    removePiece(currentPiece, playerIndex)
 
-    didMove = true
-    for block in piecePermutations[playerIndex][next_index]
-      tmpBlock = [ block[0], block[1] ]
-      unless isValidMove(playerGrid[playerIndex], tmpBlock, boundaries[playerIndex])
-        didMove = false
-        break
+    didMove = isValidMove(playerIndex, 0, 0, piecePermutations[playerIndex][next_index])
 
     if didMove
       permutationIndex[playerIndex] = next_index
       currentPiece[playerIndex] = piecePermutations[playerIndex][next_index]
 
-    for block in currentPiece[playerIndex]
-      playerGrid[playerIndex].rows[block[0]].cells[block[1]].style.backgroundColor = currentColor[playerIndex]
+    insertPiece(currentPiece, playerIndex)
 
     return didMove
 
+  ghost = (playerIndex) ->
+    if ghostPiece[playerIndex]?
+      for block in ghostPiece[playerIndex]
+        playerGrid[playerIndex].rows[block[0]].cells[block[1]].style.border = ''
+
+    ghostPiece[playerIndex] = []
+    for block in currentPiece[playerIndex]
+      ghostPiece[playerIndex].push [block[0], block[1]]
+
+    removePiece(currentPiece, playerIndex)
+
+    i = -1
+    didMove = isValidMove(playerIndex, i, 0, ghostPiece[playerIndex])
+
+    unless didMove
+      insertPiece(currentPiece, playerIndex)
+      return
+
+    while didMove
+      i -= 1
+      didMove = isValidMove(playerIndex, i, 0, ghostPiece[playerIndex])
+    i += 1
+
+    for blockNumber in [0..3]
+      ghostPiece[playerIndex][blockNumber][0] -= i
+
+    for block in ghostPiece[playerIndex]
+      playerGrid[playerIndex].rows[block[0]].cells[block[1]].style.border = '1px solid black'
+
+    insertPiece(currentPiece, playerIndex)
+
   hold = (playerIndex) ->
     return unless ableToHold[playerIndex]
-    gettingPiece[playerIndex] = true
     ableToHold[playerIndex] = false
-
-    stopMoveTimer(playerIndex)
-    stopGameClock(playerIndex)
-    removeCurrentPiece(playerIndex)
+    prepareAjaxCall(playerIndex)
+    removePiece(currentPiece, playerIndex)
 
     url = '/games/' + gameId + '/hold_piece.js?player_index=' + playerIndex
     $.ajax
       type: 'GET'
       url: url
       success: () ->
-        gettingPiece[playerIndex] = false
+        finishAjaxCall(playerIndex)
 
-  isValidMove = (grid, block, boundaries) ->
+  isValidMove = (playerIndex, i, j, piece) ->
+    didMove = true
+    for block in piece
+      tmpBlock = [ block[0] - i, block[1] - j ]
+      unless isValidBlock(playerGrid[playerIndex], tmpBlock, boundaries[playerIndex])
+        didMove = false
+        break
+    return didMove
+
+  isValidBlock = (grid, block, boundaries) ->
     return false if blockOutOfBounds(block, boundaries)
     backgroundColor = grid.rows[block[0]].cells[block[1]].style.backgroundColor
     return false unless backgroundColor == ''
@@ -89,9 +116,13 @@ $ ->
     return true if block[1] > boundaries[3]
     return false
 
-  removeCurrentPiece = (playerIndex) ->
-    for block in currentPiece[playerIndex]
+  removePiece = (piece, playerIndex) ->
+    for block in piece[playerIndex]
       playerGrid[playerIndex].rows[block[0]].cells[block[1]].style.backgroundColor = ''
+
+  insertPiece = (piece, playerIndex) ->
+    for block in piece[playerIndex]
+      playerGrid[playerIndex].rows[block[0]].cells[block[1]].style.backgroundColor = currentColor[playerIndex]
 
   startGameClock = (playerIndex) ->
     _this = this
@@ -132,6 +163,9 @@ $ ->
     fullRowCount = fullRows.length
     return if fullRowCount < 1
 
+    lineCount[playerIndex] += fullRowCount
+    $('.js-line-count').html(lineCount[playerIndex])
+
     for row in fullRows
       for col in [boundaries[playerIndex][1]..boundaries[playerIndex][3]]
         playerGrid[playerIndex].rows[row].cells[col].style.backgroundColor = ''
@@ -165,10 +199,7 @@ $ ->
 
   triggerNextPiece = (playerIndex) ->
     return if gettingPiece[playerIndex]
-    gettingPiece[playerIndex] = true
-
-    stopMoveTimer(playerIndex)
-    stopGameClock(playerIndex)
+    prepareAjaxCall(playerIndex)
     clearFullRows(playerIndex)
 
     url = '/games/' + gameId + '/next_piece.js?player_index=' + playerIndex
@@ -176,8 +207,22 @@ $ ->
       type: 'GET'
       url: url
       success: () ->
-        gettingPiece[playerIndex] = false
+        finishAjaxCall(playerIndex)
         ableToHold[playerIndex] = true
+        checkForEndOfGame(playerIndex)
+
+  prepareAjaxCall = (playerIndex) ->
+    gettingPiece[playerIndex] = true
+    stopMoveTimer(playerIndex)
+    stopGameClock(playerIndex)
+
+  finishAjaxCall = (playerIndex) ->
+    gettingPiece[playerIndex] = false
+    ghost(playerIndex)
+
+  checkForEndOfGame = (playerIndex) ->
+    return if isValidMove(playerIndex, -1, 0, currentPiece[playerIndex])
+    debugger
 
   $('#js-game-box').on 'gameUpdated', (src, gameId, playerId) ->
 
@@ -186,8 +231,11 @@ $ ->
       for playerIndex in [0..playerCount-1]
         startGameClock(playerIndex)
         ableToHold[playerIndex] = true
+        ghost(playerIndex)
+        lineCount[playerIndex] = 0
     else
       startGameClock(playerId)
+      ghost(playerId)
 
     return if gameStarted
     gameStarted = true
@@ -225,4 +273,6 @@ $ ->
           debugger
           return
 
-      stopMoveTimer(0) if didMove
+      if didMove
+        stopMoveTimer(0)
+        ghost(0)
