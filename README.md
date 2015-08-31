@@ -34,11 +34,11 @@
 - [ ] Add better test coverage
 - [ ] Add wall spins
 - [ ] Add t spins
-- [ ] Add line counter
+- [x] Add line counter
 - [ ] Add scoring metric
 - [ ] Add online multiplayer mode
 - [ ] Add offline multiplayer mode
 - [ ] Add high score model
 - [ ] Add game over screen
-- [ ] Add ghost piece
+- [x] Add ghost piece
 - [ ] Add toggle options for ghost piece, music, etc
