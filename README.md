@@ -27,3 +27,18 @@
 *[Note: Attempts to satisfy all modern Tetris requirements](http://tetris.wikia.com/wiki/Tetris_Guideline)*
 
 ---------------
+
+### Todo
+
+- [ ] Add better test coverage
+- [ ] Add wall spins
+- [ ] Add t spins
+- [ ] Add line counter
+- [ ] Add scoring metric
+- [ ] Add online multiplayer mode
+- [ ] Add offline multiplayer mode
+- [ ] Add high score model
+- [ ] Add game over screen
+- [ ] Add ghost piece
+- [ ] Add hold piece
+- [ ] Add toggle options for ghost piece, music, etc
