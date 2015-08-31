@@ -21,6 +21,7 @@
 | Move Right  | **→**  |
 | Rotate Clockwise  | Q  |
 | Rotate Counter-Clockwise  | E  |
+| Hold Piece | **␣** |
 
 ---------------
 
@@ -40,5 +41,4 @@
 - [ ] Add high score model
 - [ ] Add game over screen
 - [ ] Add ghost piece
-- [ ] Add hold piece
 - [ ] Add toggle options for ghost piece, music, etc
