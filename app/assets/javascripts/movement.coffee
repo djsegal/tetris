@@ -5,6 +5,7 @@ $ ->
   gameClock = []
   nextMoveTimer = []
   gettingPiece = []
+  ableToHold = []
 
   move = (playerIndex, direction) ->
     i = j = 0
@@ -14,8 +15,7 @@ $ ->
       when 'l' then j = +1
       when 'r' then j = -1
 
-    for block in currentPiece[playerIndex]
-      playerGrid[playerIndex].rows[block[0]].cells[block[1]].style.backgroundColor = ''
+    removeCurrentPiece(playerIndex)
 
     didMove = true
     for block in currentPiece[playerIndex]
@@ -42,8 +42,7 @@ $ ->
     next_index = 0 if next_index > 3
     next_index = 3 if next_index < 0
 
-    for block in currentPiece[playerIndex]
-      playerGrid[playerIndex].rows[block[0]].cells[block[1]].style.backgroundColor = ''
+    removeCurrentPiece(playerIndex)
 
     didMove = true
     for block in piecePermutations[playerIndex][next_index]
@@ -61,6 +60,22 @@ $ ->
 
     return didMove
 
+  hold = (playerIndex) ->
+    return unless ableToHold[playerIndex]
+    gettingPiece[playerIndex] = true
+    ableToHold[playerIndex] = false
+
+    stopMoveTimer(playerIndex)
+    stopGameClock(playerIndex)
+    removeCurrentPiece(playerIndex)
+
+    url = '/games/' + gameId + '/hold_piece.js?player_index=' + playerIndex
+    $.ajax
+      type: 'GET'
+      url: url
+      success: () ->
+        gettingPiece[playerIndex] = false
+
   isValidMove = (grid, block, boundaries) ->
     return false if blockOutOfBounds(block, boundaries)
     backgroundColor = grid.rows[block[0]].cells[block[1]].style.backgroundColor
@@ -73,6 +88,10 @@ $ ->
     return true if block[1] < boundaries[1]
     return true if block[1] > boundaries[3]
     return false
+
+  removeCurrentPiece = (playerIndex) ->
+    for block in currentPiece[playerIndex]
+      playerGrid[playerIndex].rows[block[0]].cells[block[1]].style.backgroundColor = ''
 
   startGameClock = (playerIndex) ->
     _this = this
@@ -158,6 +177,7 @@ $ ->
       url: url
       success: () ->
         gettingPiece[playerIndex] = false
+        ableToHold[playerIndex] = true
 
   $('#js-game-box').on 'gameUpdated', (src, gameId, playerId) ->
 
@@ -165,6 +185,7 @@ $ ->
       playerCount = playerGrid.length
       for playerIndex in [0..playerCount-1]
         startGameClock(playerIndex)
+        ableToHold[playerIndex] = true
     else
       startGameClock(playerId)
 
@@ -197,6 +218,9 @@ $ ->
         when 69
           # rotate clockwise
           didMove = rotate(0, +1)
+        when 32
+          hold(0)
+          return
         else
           debugger
           return

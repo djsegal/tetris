@@ -7,6 +7,7 @@ Rails.application.routes.draw do
 
   resources :games do
     get 'next_piece', on: :member
+    get 'hold_piece', on: :member
   end
 
 end

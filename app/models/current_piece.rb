@@ -25,9 +25,9 @@ class CurrentPiece < ActiveRecord::Base
     next_piece.piece_preview = nil
     next_piece.save!
     self.piece = next_piece
+
     position_piece
     make_permutations
-
     if piece_preview.pieces.count < piece_preview.visible_count
       piece_preview.make_batch_of_pieces
     end

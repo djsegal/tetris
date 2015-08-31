@@ -76,6 +76,28 @@ var playerBox, playerPreviews, currentBlock;
     playerGrid[<%= i %>].rows[currentBlock[0]].cells[currentBlock[1]].style.backgroundColor = '<%= piece.color %>';
   }
 
+  // Add held piece
+
+  <% piece = player.hold_piece.piece %>
+
+  <% if piece.present? %>
+
+    playerHold = playerBox.getElementsByClassName('js-player-box-hold')[0];
+
+    heldPieceBlocks = playerHold.getElementsByTagName('td');
+    arrayLength = heldPieceBlocks.length;
+    for (var ii = 0; ii < arrayLength; ii++) {
+      heldPieceBlocks[ii].style.backgroundColor = '';
+    }
+
+    <% piece.permutations.first.blocks.each do |block| %>
+
+      playerHold.rows[<%= 4 - block.y_pos %>].cells[<%= block.x_pos %>].style.backgroundColor = '<%= piece.color %>';
+
+    <% end %>
+
+  <% end %>
+
   // Add preview pieces
 
   playerPreviews = playerBox.getElementsByClassName('js-player-box-preview');

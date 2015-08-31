@@ -14,6 +14,7 @@
 #  current_piece_id :integer
 #  ordering_index   :integer
 #  width            :integer          default(3)
+#  hold_piece_id    :integer
 #
 
 class Piece < ActiveRecord::Base
@@ -23,6 +24,8 @@ class Piece < ActiveRecord::Base
   belongs_to :piece_preview
 
   belongs_to :current_piece
+
+  belongs_to :hold_piece
 
   belongs_to :grid
 

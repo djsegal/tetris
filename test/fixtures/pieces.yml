@@ -14,6 +14,7 @@
 #  current_piece_id :integer
 #  ordering_index   :integer
 #  width            :integer          default(3)
+#  hold_piece_id    :integer
 #
 
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html

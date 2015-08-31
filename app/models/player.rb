@@ -22,6 +22,8 @@ class Player < ActiveRecord::Base
 
   has_one :current_piece
 
+  has_one :hold_piece
+
   before_create :setup_player_components
 
   private
@@ -30,6 +32,7 @@ class Player < ActiveRecord::Base
       build_grid
       build_piece_preview
       build_current_piece
+      build_hold_piece
     end
 
 end
