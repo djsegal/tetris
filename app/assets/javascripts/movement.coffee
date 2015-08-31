@@ -221,8 +221,9 @@ $ ->
     ghost(playerIndex)
 
   checkForEndOfGame = (playerIndex) ->
+    removePiece(currentPiece, playerIndex)
     return if isValidMove(playerIndex, -1, 0, currentPiece[playerIndex])
-    debugger
+    alert('you lose :P')
 
   $('#js-game-box').on 'gameUpdated', (src, gameId, playerId) ->
 
