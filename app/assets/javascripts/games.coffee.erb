@@ -6,8 +6,17 @@ $ ->
 
   $('#js-game-box').on 'gameReady', (src, gameId) ->
 
+    myAudio = new Audio("<%= asset_path 'tetris-song.mp3' %>")
+    myAudio.addEventListener 'ended', (->
+      @currentTime = 0
+      @play()
+      return
+    ), false
+    myAudio.play()
+
     url = '/games/' + gameId + '.js'
 
     $.ajax
       type: 'GET'
       url: url
+

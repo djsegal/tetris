@@ -21,6 +21,7 @@
 .cs-player-box {
   height: 100%;
   display: inline-block;
+  background-color: whitesmoke;
 }
 
 .cs-player-box-item {
@@ -46,9 +47,16 @@
     padding: 0;
   }
 
-  td {
+  tr:not(.cs-greyed-out) td:not(.cs-greyed-out) {
+
     border-radius: 20%;
+
+    background: -webkit-linear-gradient(left top, whitesmoke, transparent, transparent, transparent); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(bottom right, whitesmoke, transparent, transparent, transparent); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(bottom right, whitesmoke, transparent, transparent, transparent); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(to bottom right, whitesmoke, transparent, transparent, transparent); /* Standard syntax */
   }
+
 
   tr {
     opacity: .9;

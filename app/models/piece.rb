@@ -45,11 +45,11 @@ class Piece < ActiveRecord::Base
   end
 
   def self.large_pieces
-    [ { piece_type: 'i', color:  'cyan' , width: 4 } ]
+    [ { piece_type: 'i', color: 'cyan', width: 4 } ]
   end
 
   def self.small_pieces
-    [ { piece_type: 'o', color: 'yellow', width: 2 } ]
+    [ { piece_type: 'o', color: 'gold', width: 2 } ]
   end
 
   def self.medium_pieces
