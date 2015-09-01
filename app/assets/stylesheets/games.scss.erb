@@ -9,13 +9,36 @@
   background-size: 100% 100%;
 }
 
+.cs-new-game-screen {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  background-color: black;
+  padding: 40px;
+  box-sizing: border-box;
+
+  table {
+    width: 100%;
+    height: 100%;
+    border: 5px solid green;
+    border-radius: 10px;
+  }
+
+  td {
+    font-family: 'Arcade';
+    font-size: xx-large;
+    color: whitesmoke;
+  }
+}
+
 .cs-player-select {
   width: 32.5%;
-  &:hover {
-    background-color: darkslategrey;
-    opacity: 0.3;
-    cursor: pointer;
-  }
+  cursor: pointer;
+}
+
+.cs-player-select-highlight {
+  background-color: darkslategrey;
+  opacity: 0.3;
 }
 
 .cs-player-box {

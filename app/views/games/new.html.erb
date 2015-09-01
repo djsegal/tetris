@@ -1,50 +1,42 @@
-<table class='cs-home-page'>
-  <tr style='height:75%'>
-  </tr>
-  <tr style='height:10%'>
-    <td style='width:17.5%'>
-    </td>
-    <td class='cs-player-select'>
-      <%= link_to games_path(@game, number_of_players: 1), :method => :post do %>
-        <div class='js-player-select__button'></div>
+<%= form_for(@game, html: { class: "cs-fill" }) do |f| %>
+
+  <% if @game.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@game.errors.count, "error") %> prohibited this game from being saved:</h2>
+
+      <ul>
+      <% @game.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
       <% end %>
-    </td>
-    <td class='cs-player-select'>
-      <%= link_to games_path(@game, number_of_players: 2), :method => :post do %>
-        <div class='js-player-select__button'></div>
-      <% end %>
-    </td>
-    <td style='width:17.5%'>
-    </td>
-  </tr>
-  <tr style='height:15%'>
-  </tr>
-</table>
+      </ul>
+    </div>
+  <% end %>
 
-<script>
+  <div class='cs-new-game-screen'>
 
-  function resizeButton(){
+      <table>
+        <tr>
+          <td>
+          </td>
+          <td>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            asdf
+          </td>
+          <td>
+            asdf
+          </td>
+        </tr>
+        <tr>
+          <td>
+          </td>
+          <td>
+          </td>
+        </tr>
+      </table>
 
-    var buttonBox = document.getElementsByClassName('cs-player-select')[0];
-    var buttonsArray = document.getElementsByClassName('js-player-select__button');
-    var arrayLength = buttonsArray.length;
+  </div>
 
-    for (var i = 0; i < arrayLength; i++) {
-      buttonsArray[i].style.width = '';
-      buttonsArray[i].style.height = '';
-    }
-
-    var buttonWidth = buttonBox.clientWidth + 'px';
-    var buttonHeight = buttonBox.clientHeight + 'px';
-
-    for (var i = 0; i < arrayLength; i++) {
-      buttonsArray[i].style.width = buttonWidth;
-      buttonsArray[i].style.height = buttonHeight;
-    }
-
-  }
-
-  window.onload = resizeButton;
-  window.onresize = resizeButton;
-
-</script>
+<% end %>
