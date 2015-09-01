@@ -87,7 +87,7 @@ $ ->
     prepareAjaxCall(playerIndex)
     removePiece(currentPiece, playerIndex)
 
-    url = '/games/' + gameId + '/hold_piece.js?player_index=' + playerIndex
+    url = '/players/' + gameId + '/hold_piece.js?player_index=' + playerIndex
     $.ajax
       type: 'GET'
       url: url
@@ -202,7 +202,7 @@ $ ->
     prepareAjaxCall(playerIndex)
     clearFullRows(playerIndex)
 
-    url = '/games/' + gameId + '/next_piece.js?player_index=' + playerIndex
+    url = '/players/' + gameId + '/next_piece.js?player_index=' + playerIndex
     $.ajax
       type: 'GET'
       url: url
@@ -223,7 +223,12 @@ $ ->
   checkForEndOfGame = (playerIndex) ->
     removePiece(currentPiece, playerIndex)
     return if isValidMove(playerIndex, -1, 0, currentPiece[playerIndex])
-    alert('you lose :P')
+    prepareAjaxCall(playerIndex)
+
+    url = '/players/' + gameId + '/game_over.js?player_index=' + playerIndex
+    $.ajax
+      type: 'GET'
+      url: url
 
   $('#js-game-box').on 'gameUpdated', (src, gameId, playerId) ->
 

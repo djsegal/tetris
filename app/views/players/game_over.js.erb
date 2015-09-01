@@ -1,0 +1,74 @@
+playerGrid[<%= @player_id %>] = playerBox.getElementsByClassName('js-player-box-grid')[0];
+
+gameOver = [
+  [ 1, 1, 1, 1, 1, 0, 5, 5, 5, 0 ],
+  [ 1, 0, 0, 0, 0, 5, 5, 5, 5, 5 ],
+  [ 1, 0, 1, 1, 1, 5, 5, 5, 5, 5 ],
+  [ 1, 0, 0, 0, 1, 5, 5, 5, 5, 5 ],
+  [ 1, 1, 1, 1, 1, 0, 5, 5, 5, 0 ],
+  [ 0, 2, 2, 2, 0, 6, 0, 0, 0, 6 ],
+  [ 2, 2, 2, 2, 2, 6, 0, 0, 0, 6 ],
+  [ 2, 2, 2, 2, 2, 0, 6, 0, 6, 0 ],
+  [ 2, 0, 0, 0, 2, 0, 6, 0, 6, 0 ],
+  [ 2, 0, 0, 0, 2, 0, 0, 6, 0, 0 ],
+  [ 3, 0, 0, 0, 3, 7, 7, 7, 7, 7 ],
+  [ 3, 3, 0, 3, 3, 7, 0, 0, 0, 0 ],
+  [ 3, 0, 3, 0, 3, 7, 7, 7, 0, 0 ],
+  [ 3, 0, 0, 0, 3, 7, 0, 0, 0, 0 ],
+  [ 3, 0, 0, 0, 3, 7, 7, 7, 7, 7 ],
+  [ 4, 4, 4, 4, 4, 8, 8, 8, 8, 0 ],
+  [ 4, 0, 0, 0, 0, 8, 8, 8, 8, 8 ],
+  [ 4, 4, 4, 0, 0, 8, 8, 8, 8, 0 ],
+  [ 4, 0, 0, 0, 0, 8, 0, 0, 0, 8 ],
+  [ 4, 4, 4, 4, 4, 8, 0, 0, 0, 8 ]
+];
+
+<%
+  top_row = @player.grid.top_buffer
+  bot_row = top_row + @player.grid.height - 1
+  beg_col = @player.grid.side_buffer
+  end_col = beg_col + @player.grid.width - 1
+%>
+
+<% (top_row..bot_row).each_with_index do |i, ii| %>
+
+  <% (beg_col..end_col).each_with_index do |j, jj| %>
+
+    switch ( gameOver[<%= ii %>][<%= jj %>] ) {
+      case 0:
+        backgroundColor = '';
+        break;
+      case 1:
+        backgroundColor = 'grey';
+        break;
+      case 2:
+        backgroundColor = 'black';
+        break;
+      case 3:
+        backgroundColor = 'grey';
+        break;
+      case 4:
+        backgroundColor = 'black';
+        break;
+      case 5:
+        backgroundColor = 'darkRed';
+        break;
+      case 6:
+        backgroundColor = 'red';
+        break;
+      case 7:
+        backgroundColor = 'darkRed';
+        break;
+      case 8:
+        backgroundColor = 'red';
+        break;
+      default:
+        backgroundColor = '';
+        break;
+    }
+
+    playerGrid[<%= @player_id %>].rows[<%= i %>].cells[<%= j %>].style.backgroundColor = backgroundColor;
+
+  <% end %>
+
+<% end %>

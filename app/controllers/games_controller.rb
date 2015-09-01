@@ -55,20 +55,6 @@ class GamesController < ApplicationController
     end
   end
 
-  def next_piece
-    set_game
-    @player = @game.players.find_by(ordering_index: params[:player_index])
-    @player.current_piece.get_next_piece
-    render :show
-  end
-
-  def hold_piece
-    set_game
-    @player = @game.players.find_by(ordering_index: params[:player_index])
-    @player.hold_piece.hold_current_piece
-    render :show
-  end
-
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_game
