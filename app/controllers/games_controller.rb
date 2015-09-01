@@ -25,6 +25,7 @@ class GamesController < ApplicationController
   # POST /games
   # POST /games.json
   def create
+    binding.pry
     if @game = Game.create(game_params)
       redirect_to @game
     else
@@ -57,6 +58,7 @@ class GamesController < ApplicationController
   end
 
   private
+
     # Use callbacks to share common setup or constraints between actions.
     def set_game
       @game = Game.friendly.find(params[:id])
@@ -64,6 +66,9 @@ class GamesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def game_params
-      params.permit(:game, :number_of_players)
+      the_game_params = params.permit(:game, :number_of_players)
+      return the_game_params unless the_game_params.empty?
+      params.require(:game).permit(:number_of_players, :mode, :name)
     end
+
 end

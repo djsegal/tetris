@@ -12,27 +12,30 @@
     </div>
   <% end %>
 
+  <%= f.hidden_field :number_of_players, value: 2 %>
+
   <div class='cs-new-game-screen'>
 
       <table>
         <tr>
           <td>
+            name
           </td>
           <td>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            asdf
-          </td>
-          <td>
-            asdf
+            <%= f.text_field :name, autocomplete: 'off', autofocus: true %>
           </td>
         </tr>
         <tr>
           <td>
+            mode
           </td>
           <td>
+            <%= f.select :mode, ['network', 'laptop'] %>
+          </td>
+        </tr>
+        <tr>
+          <td colspan=2>
+            <%= f.submit %>
           </td>
         </tr>
       </table>

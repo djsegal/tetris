@@ -16,10 +16,12 @@ class Game < ActiveRecord::Base
   has_many :players
 
   after_create :make_players
-  before_create :make_name
+  before_validation :make_name
 
   include FriendlyId
   friendly_id :name, use: :slugged
+
+  validates :name, uniqueness: true, presence: true
 
   private
 
@@ -31,6 +33,7 @@ class Game < ActiveRecord::Base
 
     def make_name
       return if name.present?
+      return if mode == 'network'
       self.name = SecureRandom.uuid
       while Game.exists? name: name
         self.name = SecureRandom.uuid
