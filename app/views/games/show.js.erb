@@ -2,7 +2,7 @@ var playerBox, playerPreviews, currentBlock;
 
 <% unless @player.present? %>
 
-  gameId = '<%= @game.id %>'
+  gameId = '<%= @game.slug %>'
 
   playerGrid = []
   piecePermutations = [];
@@ -123,4 +123,4 @@ var playerBox, playerPreviews, currentBlock;
 
 <% end %>
 
-$('#js-game-box').trigger('gameUpdated', ['<%= @game.id %>', '<%= player_id %>']);
+$('#js-game-box').trigger('gameUpdated', ['<%= @game.slug %>', '<%= player_id %>']);

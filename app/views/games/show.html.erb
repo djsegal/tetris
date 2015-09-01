@@ -19,6 +19,6 @@
 
 <script>
   $(document).ready(function() {
-    $('#js-game-box').trigger('gameReady', '<%= @game.id %>');
+    $('#js-game-box').trigger('gameReady', '<%= @game.slug %>');
   });
 </script>

@@ -6,6 +6,9 @@
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
 #  number_of_players :integer
+#  mode              :string
+#  name              :string
+#  slug              :string
 #
 
 require 'test_helper'
