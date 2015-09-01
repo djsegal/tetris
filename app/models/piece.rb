@@ -29,7 +29,8 @@ class Piece < ActiveRecord::Base
 
   belongs_to :grid
 
-  has_many :permutations
+  # delete_all needed for make_initial_batch in piece_preview
+  has_many :permutations, dependent: :destroy
 
   TYPES_OF_FIRST_PIECES = [ 'i', 't', 'j', 'l' ]
 

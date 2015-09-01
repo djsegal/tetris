@@ -6,6 +6,12 @@ $ ->
 
   $('#js-game-box').on 'gameReady', (src, gameId) ->
 
+    url = '/games/' + gameId + '.js'
+
+    $.ajax
+      type: 'GET'
+      url: url
+
     <% unless Rails.env.development? %>
 
       myAudio = new Audio("<%= asset_path 'tetris-song.mp3' %>")
@@ -17,10 +23,3 @@ $ ->
       myAudio.play()
 
     <% end %>
-
-    url = '/games/' + gameId + '.js'
-
-    $.ajax
-      type: 'GET'
-      url: url
-

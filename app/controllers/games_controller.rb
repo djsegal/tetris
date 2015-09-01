@@ -25,7 +25,6 @@ class GamesController < ApplicationController
   # POST /games
   # POST /games.json
   def create
-    binding.pry
     if @game = Game.create(game_params)
       redirect_to @game
     else
