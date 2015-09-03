@@ -25,7 +25,8 @@ class GamesController < ApplicationController
   # POST /games
   # POST /games.json
   def create
-    if @game = Game.create(game_params)
+    @game = Game.new(game_params)
+    if @game.save
       redirect_to @game
     else
       render :new
