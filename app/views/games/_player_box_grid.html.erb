@@ -3,7 +3,7 @@
   buffer_class = Rails.env.development? ? 'cs-greyed-out' : 'cs-hidden'
 %>
 
-<table class='cs-fill js-player-box-grid'>
+<table class='cs-fill cs-player-box-inner-grid js-player-box-grid'>
 
   <% grid.top_buffer.times do %>
     <tr class=<%= buffer_class %> data-row='<%= row_index %>'>
