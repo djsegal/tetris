@@ -4,6 +4,8 @@ source 'https://rubygems.org'
 #  Added for Tetris
 # ------------------
 
+ruby '> 2.3.0'
+
 gem 'friendly_id', '~> 5.1.0'
 
 group :development, :test do
