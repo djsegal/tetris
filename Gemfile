@@ -8,8 +8,7 @@ gem 'friendly_id', '~> 5.1.0'
 
 group :development, :test do
   gem 'annotate', '~> 2.6.6'
-  gem 'jazz_hands', github: 'nixme/jazz_hands', branch: 'bring-your-own-debugger'
-  gem 'pry-byebug'
+  gem 'pry'
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'sqlite3'
@@ -25,7 +24,7 @@ end
 # ------------------
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.2.2'
+gem 'rails', '4.2.8'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
